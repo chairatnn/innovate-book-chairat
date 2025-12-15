@@ -1,9 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
 
-// const API_POST = "https://jsd5-mock-backend.onrender.com/members";
-// const API_DELETE = "https://jsd5-mock-backend.onrender.com/member";
-
 export function AdminTable({ users, setUsers, fetchUsers, API }) {
   const [form, setForm] = useState({
     name: "",
@@ -11,8 +8,19 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
     position: "",
   });
 
+  const [editId, setEditId] = useState(null);
+  const [editForm, setEditForm] = useState({
+    name: "",
+    lastname: "",
+    position: "",
+  });
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleEditChange = (e) => {
+    setEditForm({ ...editForm, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -35,6 +43,29 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
     if (!window.confirm("Delete this user?")) return;
     await axios.delete(`${API}/${id}`);
     setUsers(users.filter((user) => user.id !== id));
+  };
+
+  const handleEdit = (user) => {
+    setEditId(user.id);
+    setEditForm({
+      name: user.name,
+      lastname: user.lastname,
+      position: user.position,
+    });
+  };
+
+  const handleEditSave = async (id) => {
+    try {
+      await axios.put(`${API}/${id}`, editForm);
+      await fetchUsers();
+      setEditId(null);
+    } catch (error) {
+      console.error("Error updating member:", error);
+    }
+  };
+
+  const handleEditCancel = () => {
+    setEditId(null);
   };
 
   return (
@@ -80,17 +111,68 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
         <tbody>
           {users.map((user) => (
             <tr key={user.id} className="bg-white">
-              <td className="border p-2 ">{user.name}</td>
-              <td className="border p-2 ">{user.lastname}</td>
-              <td className="border p-2 ">{user.position}</td>
-              <td className="border p-2 ">
-                <button
-                  onClick={() => handleDelete(user.id)}
-                  className="cursor-pointer bg-rose-400 hover:bg-rose-500 text-white px-2 rounded-xl"
-                >
-                  Delete
-                </button>
-              </td>
+              {editId === user.id ? (
+                <>
+                  <td className="border p-2 ">
+                    <input
+                      value={editForm.name}
+                      onChange={handleEditChange}
+                      name="name"
+                      className="bg-white w-24 px-2 rounded border"
+                    />
+                  </td>
+                  <td className="border p-2 ">
+                    <input
+                      value={editForm.lastname}
+                      onChange={handleEditChange}
+                      name="lastname"
+                      className="bg-white w-24 px-2 rounded border"
+                    />
+                  </td>
+                  <td className="border p-2 ">
+                    <input
+                      value={editForm.position}
+                      onChange={handleEditChange}
+                      name="position"
+                      className="bg-white w-24 px-2 rounded border"
+                    />
+                  </td>
+                  <td className="border p-2 ">
+                    <button
+                      onClick={() => handleEditSave(user.id)}
+                      className="cursor-pointer bg-teal-400 hover:bg-teal-500 text-white px-2 rounded-xl"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={handleEditCancel}
+                      className="cursor-pointer bg-gray-400 hover:bg-gray-500 text-white px-2 rounded-xl"
+                    >
+                      Cancel
+                    </button>
+                  </td>
+                </>
+              ) : (
+                <>
+                  <td className="border p-2 ">{user.name}</td>
+                  <td className="border p-2 ">{user.lastname}</td>
+                  <td className="border p-2 ">{user.position}</td>
+                  <td className="border p-2 ">
+                    <button
+                      onClick={() => handleEdit(user)}
+                      className="cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-white px-2 rounded-xl"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(user.id)}
+                      className="cursor-pointer bg-rose-400 hover:bg-rose-500 text-white px-2 rounded-xl"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </>
+              )}
             </tr>
           ))}
         </tbody>

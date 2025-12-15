@@ -7,6 +7,8 @@ import axios from "axios";
 
 const API = "https://67eca027aa794fb3222e43e2.mockapi.io/members";
 
+// const API = "http://localhost:3000/members";
+
 export default function Home() {
   const [view, setView] = useState(null);
   const [users, setUsers] = useState([]);
