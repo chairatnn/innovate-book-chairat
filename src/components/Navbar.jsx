@@ -30,8 +30,8 @@ export function Navbar({ user, authLoading, authError, login, logout }) {
             </Link>
           </li>
           <li>
-            <Link to="/owner" className="hover:text-amber-500">
-              Owner
+            <Link to="/aboutUs" className="hover:text-amber-500">
+              About Us
             </Link>
           </li>
         </ul>
