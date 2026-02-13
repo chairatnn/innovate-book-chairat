@@ -159,7 +159,7 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
                   </td>
                   <td className="border p-2 ">
                     <button
-                      onClick={() => handleEditSave(user._id)}
+                      onClick={() => handleEditSave(book._id)}
                       className="cursor-pointer bg-teal-400 hover:bg-teal-500 text-white px-2 rounded-xl"
                     >
                       Save

@@ -5,6 +5,7 @@ import axios from "axios";
 
 export function Layout() {
   const apiBase = import.meta.env.VITE_API_URL;
+  const apiBase2 = import.meta.env.VITE_API_URL_2;
 
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
@@ -80,7 +81,7 @@ export function Layout() {
         logout={logout}
       />
       <section className="bg-gradient-to-r from-teal-100 to-blue-400 flex justify-center">
-        <Outlet context={{ user, authLoading, apiBase }} />
+        <Outlet context={{ user, authLoading, apiBase, apiBase2 }} />
       </section>
     </div>
   );
