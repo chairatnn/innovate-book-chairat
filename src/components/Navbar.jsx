@@ -22,15 +22,15 @@ export function Navbar({ user, authLoading, authError, login, logout }) {
 
   return (
     <nav>
-      <div className="flex justify-between px-10 items-center w-full bg-blue-500 h-14 border-b-2 border-black gap-x-6 text-2xl text-white ">
+      <div className="flex flex-col md:flex-row justify-between px-10 items-center w-full bg-blue-500 h-14 border-b-2 border-black gap-x-6 text-xl md:text-2xl text-white">
         <ul className="flex items-center gap-x-6">
           <li>
-            <Link to="/" className="hover:text-amber-500">
+            <Link to="/" className="hover:text-gray-300">
               Home
             </Link>
           </li>
           <li>
-            <Link to="/aboutUs" className="hover:text-amber-500">
+            <Link to="/aboutUs" className="hover:text-gray-300">
               About Us
             </Link>
           </li>
@@ -45,7 +45,7 @@ export function Navbar({ user, authLoading, authError, login, logout }) {
               </span>
               <button
                 onClick={logout}
-                className="cursor-pointer bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded-xl text-base"
+                className="cursor-pointer bg-gray-300 hover:bg-amber-400 px-3 py-0 rounded-xl text-black text-base"
               >
                 Logout
               </button>

@@ -105,7 +105,7 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
           type="submit"
           className="cursor-pointer bg-sky-500 hover:bg-sky-600 text-white px-3 py-2 mx-1 rounded-4xl"
         >
-          Save new user
+          Save User
         </button>
       </form>
       <table className="w-full border-separate">

@@ -1,19 +1,26 @@
 export default function AboutUs() {
   return (
-    <div className="min-h-screen flex flex-col items-center pt-12 gap-y-3 w-1/2">
-      <h2 className="text-3xl font-bold text-center">N. Chairat</h2>
+    <div className="min-h-screen flex flex-col items-center pt-12 gap-y-3 w-full bg-white">
       <img
-        src="/public/chairat-photo.png"
+        src="/public/logoInno.png"
         alt="admin image"
-        className="w-64 rounded-2xl"
+        className="w-fit rounded-2xl"
       />
-      <p className="text-center text-base">
-        <span className="font-bold">Fullstack Developer:</span>
-        <br /><br />"Hello! I am the System Administrator for this platform. My goal is to ensure you have the best experience possible while using our services. Whether you are looking to get started or want to share your thoughts, I am here to assist: Sign Up / Feedback / Suggestions <br/><strong>Contact: chairatnn@gmail.com</strong> 
+      <h2 className="text-2xl font-bold text-center">Chairat N.</h2>
+      <h4 className="text-xl font-bold text-center">Fullstack Developer:</h4>
+      <p className="text-center text-base w-full md:w-1/2 mx-auto">
+        "Hello! I am the System Administrator for this platform. My goal is to
+        ensure you have the best experience possible while using our services.
+        Whether you are looking to get started or want to share your thoughts, I
+        am here to assist: Sign Up / Feedback / Suggestions <br /><br />
+        <strong>Contact: chairatnn@gmail.com</strong>
       </p>
-       <footer class="bg-dark text-center py-4 mt-5">
-        <p class="mb-0">&copy; 2026 Book Management. All Rights Reserved.</p>
-    </footer>
+
+      <footer className="text-center py-10 mt-auto border-t border-gray-50">
+        <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">
+          &copy; 2026 All Rights Reserved.
+        </p>
+      </footer>
     </div>
   );
 }
