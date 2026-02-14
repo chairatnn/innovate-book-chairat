@@ -2,7 +2,7 @@ export default function AboutUs() {
   return (
     <div className="min-h-screen flex flex-col items-center pt-12 gap-y-3 w-full bg-white">
       <img
-        src="/public/logoInno.png"
+        src="logoInno.png"
         alt="admin image"
         className="w-fit rounded-2xl"
       />
