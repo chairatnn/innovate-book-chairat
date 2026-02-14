@@ -1,100 +1,109 @@
-ระบบจัดการรายการหนังสือ (Book Management System)
+📚 Innovate Book Management System
 
-ระบบเว็บแอปพลิเคชันสำหรับจัดการรายการหนังสือของบริษัท พัฒนาด้วย MERN Stack
+Innovate Book แพลตฟอร์มบริหารจัดการหนังสือแบบ Full-stack ที่ออกแบบมาเพื่อการใช้งาน โดยมุ่งเน้นที่ประสิทธิภาพการจัดการข้อมูลขนาดใหญ่และการรักษาความปลอดภัยที่เป็นมาตรฐาน
 
-ฟีเจอร์หลัก (Feature)
+✨ Key Features
 
-    🔐 การเข้าสู่ระบบ: ป้องกันการเข้าถึงข้อมูลโดยไม่ได้รับอนุญาตด้วย JWT
+🔐 Secure Authentication: ระบบสมาชิกและเข้าสู่ระบบด้วย JWT (JSON Web Token) พร้อมการป้องกัน Route สำคัญ
 
-    📚 การจัดการข้อมูล (CRUD): เพิ่ม, อ่าน, แก้ไข, ลบ ข้อมูลหนังสือได้
+📱 Fully Responsive: การออกแบบที่รองรับทุกหน้าจอ (Mobile, Tablet, Desktop) ด้วย Tailwind CSS
 
-    📱 Responsive Design: ใช้งานได้ทั้งบนคอมพิวเตอร์และมือถือ
+📄 Server-side Pagination: ระบบแบ่งหน้าข้อมูลที่มีประสิทธิภาพ ช่วยลด Latency เมื่อมีข้อมูลหนังสือจำนวนมาก
 
-    🔍 ระบบค้นหาและแบ่งหน้า: รองรับการจัดการข้อมูลหนังสือจำนวนมากด้วย Pagination
+🔄 State Management: การจัดการ Loading และ Error States ที่ชัดเจน เพื่อ UX ที่ดีเยี่ยม
 
+🛠 Full CRUD Operations: ระบบจัดการข้อมูลหนังสือ (เพิ่ม, อ่าน, แก้ไข, ลบ) อย่างครบถ้วน
 
-วิธีการใช้งาน (Introduction)
+🛠 Tech Stack
 
-    เข้าสู่ระบบด้วยชื่อผู้ใช้ ai14@example.com และรหัสผ่าน 12345678
+    Frontend
 
-    หน้า Dashboard จะแสดงรายการหนังสือทั้งหมด
+        Core: React.js
 
-    ใช้ปุ่ม "เพิ่มหนังสือ" แถวบนเพื่อจัดการข้อมูลหนังสือ
+        Styling: Tailwind CSS (Modern & Responsive UI)
 
-    ใช้ปุ่ม "แก้ไข/ลบ" ในแต่ละแถวเพื่อจัดการข้อมูล
+        State Management: React Hooks
 
-Document API
+        API Client: Axios
 
-1. การออกแบบสถาปัตยกรรม (Architecture)
+    Backend
 
-    1.1 Frontend: React 18 + Vite (SPA)
-        UI Framework: Tailwind CSS
-        State Management: React Hooks (useState, useEffect)
+        Runtime: Node.js
 
-    1.2 Backend: Node.js + Express
-        Database: MongoDB
+        Framework: Express.js
 
-2. ข้อมูลทางเทคนิค (Backend Logic)
+        Database: MongoDB with Mongoose (ODM)
 
-    2.1 Database Schema
+        Security: JWT, bcryptjs (Password Hashing)
 
-    CREATE TABLE books (
+        Logging: Morgan / Custom Error Middleware
 
-        id SERIAL PRIMARY KEY,
+🚀 Getting Started
 
-        title VARCHAR(255) NOT NULL,
+    Prerequisites
 
-        author VARCHAR(255) NOT NULL,
+        Node.js (v14.x or higher)
 
-        published_year INT,
+        MongoDB Atlas Account หรือ Local Instance
 
-        genre VARCHAR(100),
+    Installation
 
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        1.Clone the repository
 
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        Bash
+        git clone https://github.com/chairatnn/innovate-book-chairat.git
+        cd innovate-book-chairat
+        
+        2.Setup Backend
 
-    );
+        Bash
+        cd server # หรือชื่อโฟลเดอร์ backend ของคุณ
+        npm install
 
-    2.2 API Endpoints
+        สร้างไฟล์ .env และกำหนดค่าดังนี้:
 
-        Method  Endpoint        Description                      Auth Required
+        ข้อมูลโค้ด
+            PORT=3000
+            MONGO_URI=your_mongodb_connection_string
+            JWT_SECRET=your_secret_key
 
-        POST    /api/login      รับ Username/Password และค่า JWT Token  No
+        3.Setup Frontend
 
-        GET     /api/books      ดึงข้อมูลหนังสือ (query: page, limit)      Yes
+        Bash
+        cd client # หรือชื่อโฟลเดอร์ frontend ของคุณ
+        npm install
+        npm start
 
-        POST    /api/books      เพิ่มหนังสือใหม่                           Yes
+📁 Project Structure
 
-        PUT     /api/books/:id  แก้ไขข้อมูลหนังสือ                         Yes
+        Plaintext
+        ├── client/              # React Frontend
+        │   ├── src/
+        │   │   ├── components/  # Reusable UI Components
+        │   │   ├── pages/       # Page Views
+        │   │   └── services/    # API Interaction
+        ├── server/              # Node.js Backend
+        │   ├── controllers/     # Business Logic
+        │   ├── models/          # MongoDB Schemas
+        │   ├── routes/          # API Endpoints
+        │   └── middleware/      # Auth & Error Handling
 
-        DELETE  /api/books/:id  ลบข้อมูลหนังสือ                           Yes
+🛡️ API Documentation
 
+สำหรับรายละเอียด Endpoints ทั้งหมด โปรดดูที่ไฟล์ API_DOC.md
 
-3. การจัดการ Error และ Logging
+📈 Future Roadmap
 
-    - Backend: ใช้ Middleware express สำหรับการบันทึก HTTP Logs และ try-catch คุมการทำงานของ DB
+[ ] ระบบค้นหาแบบ Full-text Search ด้วย AI Vector Search
 
-    - Frontend: มีการใช้ Error Boundary และสถานะ error ใน React เพื่อแสดง UI เมื่อ API ล้มเหลว
+[ ] ฟีเจอร์ Upload รูปภาพหน้าปกหนังสือ (Cloudinary Integration)
 
-4. การทดสอบ (Unit Test)
+[ ] ระบบแนะนำหนังสือ (Recommendation System) ตามความสนใจของผู้ใช้
 
-    ตัวอย่างการทดสอบฟังก์ชันการคำนวณหน้า (Pagination Logic) ด้วย Jest:
+👤 Author
 
-    test('ควรคำนวณ Pagination ได้ถูกต้อง', () => {
+Chairat N.
 
-        const total = 25;
+GitHub: https://github.com/chairatnn
 
-        const limit = 5;
-
-        const expectedTotalPages = 5;
-
-        expect(Math.ceil(total / limit)).toBe(expectedTotalPages);
-
-    });
-
-5. ความปลอดภัย (Security)
-
-    - JWT (JSON Web Token): ใช้สำหรับการระบุตัวตนทุกครั้งที่เรียก API
-    
-    - Password Hashing: ใช้ bcrypt เพื่อเข้ารหัสรหัสผ่านของ user ก่อนลง DB
+Experience: Software Developer & Project Manager (10+ years)

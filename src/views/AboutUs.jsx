@@ -18,7 +18,7 @@ export default function AboutUs() {
 
       <footer className="text-center py-10 mt-auto border-t border-gray-50">
         <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">
-          &copy; 2026 All Rights Reserved.
+          &copy; 2026 Innovate AI - Book Management System
         </p>
       </footer>
     </div>

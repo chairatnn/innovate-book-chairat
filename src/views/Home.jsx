@@ -13,7 +13,7 @@ export default function Home() {
   // --- Pagination States ---
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [pageSize] = useState(3); // จำนวนข้อมูลต่อ 1 หน้า
+  const [pageSize] = useState(3); // ข้อมูลต่อ 1 หน้า
 
   const fetchUsers = async () => {
     if (!apiBase) return;
@@ -28,11 +28,11 @@ export default function Home() {
   const fetchBooks = useCallback(async (page = 1) => {
     if (!apiBase2) return;
     try {
-      // ส่ง query params: page และ limit ไปยัง backend
+      // ส่ง query params: page และ limit ไป backend
       const res2 = await axios.get(`${apiBase2}?page=${page}&limit=${pageSize}`);
       setBooks(res2.data.data || []);
       
-      // อัปเดตข้อมูลจำนวนหน้าทั้งหมดจาก backend (ถ้ามีส่งกลับมา)
+      // อัปเดตข้อมูลจำนวนหน้าทั้งหมดจาก backend
       if (res2.data.totalPages) {
         setTotalPages(res2.data.totalPages);
       }
@@ -50,8 +50,8 @@ export default function Home() {
   return (
     <div className="min-h-screen p-6 gap-y-6 flex flex-col justify-start w-full bg-white">
       <section className="mt-20 text-center">
-        <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Book Management</h1>
-        <h3 className="text-3xl text-gray-400 mt-2">Innovate AI</h3>
+        <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Library Management</h1>
+        <h3 className="text-3xl text-gray-400 mt-2">🚀 Innovate AI Co., Ltd.</h3>
       </section>
 
       <section className="flex justify-center gap-x-3 font-bold mt-8">
@@ -134,7 +134,7 @@ export default function Home() {
 
         <footer className="text-center py-10 mt-auto border-t border-gray-50">
         <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">
-          &copy; 2026 All Rights Reserved.
+          &copy; Innovate AI - Book Management System
         </p>
       </footer>
     </div>
