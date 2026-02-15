@@ -17,6 +17,22 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
     genre: "",
   });
 
+  // --- ส่วนที่เพิ่มใหม่: ฟังก์ชันสำหรับเช็คเงื่อนไขปี ---
+  const validateYear = (year) => {
+    const currentYear = new Date().getFullYear();
+    const numYear = parseInt(year);
+
+    if (numYear <= 0) {
+      alert("ปีที่พิมพ์ต้องเป็นค่าบวกเท่านั้น");
+      return false;
+    }
+    if (numYear > currentYear) {
+      alert(`ปีที่พิมพ์ (${numYear}) ต้องไม่เกินปีปัจจุบัน (${currentYear})`);
+      return false;
+    }
+    return true;
+  };
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -27,6 +43,10 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // 1. ตรวจสอบเงื่อนไขที่ Frontend ก่อน
+    if (!validateYear(form.year)) return;
+
     try {
       await axios.post(API, form, { withCredentials: true });
       await fetchBooks();
@@ -38,14 +58,22 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
         genre: "",
       });
     } catch (error) {
+      // 2. ถ้าหลุดไปถึง Backend แล้ว Error ให้แสดง Alert จากข้อความที่ Mongoose ส่งมา
+      const serverError = error.response?.data?.message || error.message;
+      alert(`ไม่สามารถบันทึกได้: ${serverError}`);
       console.error("Error creating book:", error);
     }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this book?")) return;
-    await axios.delete(`${API}/${id}`, { withCredentials: true });
-    setBooks(books.filter((book) => book._id !== id));
+    try {
+      await axios.delete(`${API}/${id}`, { withCredentials: true });
+      setBooks(books.filter((book) => book._id !== id));
+    } catch (error) {
+      alert("Error deleting book:");
+      console.error("Error deleting book:", error);
+    }
   };
 
   const handleEdit = (book) => {
@@ -59,11 +87,17 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
   };
 
   const handleEditSave = async (id) => {
+    // 1. ตรวจสอบเงื่อนไขปีในโหมดแก้ไขด้วย
+    if (!validateYear(editForm.year)) return;
+
     try {
       await axios.patch(`${API}/${id}`, editForm, { withCredentials: true });
       await fetchBooks();
       setEditId(null);
     } catch (error) {
+      // 2. ดัก Error จาก Backend กรณีการแก้ไข
+      const serverError = error.response?.data?.message || error.message;
+      alert(`ไม่สามารถแก้ไขได้: ${serverError}`);
       console.error("Error updating book:", error);
     }
   };
