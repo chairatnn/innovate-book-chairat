@@ -17,17 +17,47 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
     genre: "",
   });
 
-  // --- ส่วนที่เพิ่มใหม่: ฟังก์ชันสำหรับเช็คเงื่อนไขปี ---
+  // --- ฟังก์ชันสำหรับเช็คเงื่อนไขปี ---
   const validateYear = (year) => {
     const currentYear = new Date().getFullYear();
-    const numYear = parseInt(year);
+    // แปลงค่าเป็นตัวเลขเพื่อตรวจสอบ
+    const numYear = Number(year);
 
+    // 1. เช็คว่าเป็นตัวเลขที่ถูกต้องหรือไม่
+    if (isNaN(numYear)) {
+      alert("กรุณากรอกปีเป็นตัวเลขเท่านั้น");
+      return false;
+    }
+    // 2. เช็คว่าเป็นเลขจำนวนเต็มหรือไม่
+    if (!Number.isInteger(numYear)) {
+      alert("ปีที่พิมพ์ต้องเป็นเลขจำนวนเต็มเท่านั้น");
+      return false;
+    }
+    // 3. เช็คค่าบวก
     if (numYear <= 0) {
       alert("ปีที่พิมพ์ต้องเป็นค่าบวกเท่านั้น");
       return false;
     }
+    // 4. เช็คไม่เกินปีปัจจุบัน
     if (numYear > currentYear) {
       alert(`ปีที่พิมพ์ (${numYear}) ต้องไม่เกินปีปัจจุบัน (${currentYear})`);
+      return false;
+    }
+    return true;
+  };
+
+  // --- ส่วนที่เพิ่มใหม่: ฟังก์ชันตรวจสอบความว่างเปล่า ---
+  const validateForm = (data) => {
+    if (!data.title.trim()) {
+      alert("กรุณากรอกชื่อหนังสือ");
+      return false;
+    }
+    if (!data.author.trim()) {
+      alert("กรุณากรอกชื่อผู้แต่ง");
+      return false;
+    }
+    if (!data.genre.trim()) {
+      alert("กรุณากรอกประเภทหนังสือ");
       return false;
     }
     return true;
@@ -44,7 +74,8 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 1. ตรวจสอบเงื่อนไขที่ Frontend ก่อน
+    // ตรวจสอบทั้งความว่างเปล่าและเงื่อนไขปี
+    if (!validateForm(form)) return;
     if (!validateYear(form.year)) return;
 
     try {
@@ -58,7 +89,7 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
         genre: "",
       });
     } catch (error) {
-      // 2. ถ้าหลุดไปถึง Backend แล้ว Error ให้แสดง Alert จากข้อความที่ Mongoose ส่งมา
+      // 2. ถ้า Error หลุดไป Backend ให้ Alert จาก Mongoose
       const serverError = error.response?.data?.message || error.message;
       alert(`ไม่สามารถบันทึกได้: ${serverError}`);
       console.error("Error creating book:", error);
@@ -71,7 +102,7 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
       await axios.delete(`${API}/${id}`, { withCredentials: true });
       setBooks(books.filter((book) => book._id !== id));
     } catch (error) {
-      alert("Error deleting book:");
+      alert("เกิดข้อผิดพลาดในการลบข้อมูล");
       console.error("Error deleting book:", error);
     }
   };
@@ -87,7 +118,8 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
   };
 
   const handleEditSave = async (id) => {
-    // 1. ตรวจสอบเงื่อนไขปีในโหมดแก้ไขด้วย
+    // ตรวจสอบเงื่อนไขกรอกข้อมูลครบและปีถูกต้อง
+    if (!validateForm(editForm)) return;
     if (!validateYear(editForm.year)) return;
 
     try {
@@ -127,6 +159,8 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
           onChange={handleChange}
           value={form.year}
           name="year"
+          type="number"
+          step="1"
           className="bg-white mx-1 w-32 px-2 rounded border"
           placeholder="Year"
         />
