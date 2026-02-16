@@ -173,7 +173,7 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
         />
         <button
           type="submit"
-          className="cursor-pointer bg-sky-500 hover:bg-sky-600 text-white px-3 py-1 mx-1 rounded-4xl"
+          className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 mx-1 rounded-4xl"
         >
           Save Book
         </button>
@@ -249,11 +249,7 @@ export function BookTable({ books, setBooks, fetchBooks, API }) {
                   <td className="p-3 md:p-4 text-center text-gray-600">
                     {book.year}
                   </td>
-                  <td className="p-3 md:p-4 text-center">
-                    <span className="px-2 py-1 bg-blue-50 text-blue-600 rounded-md text-xs font-semibold">
-                      {book.genre}
-                    </span>
-                  </td>
+                  <td className="p-3 md:p-4 text-center">{book.genre}</td>
                   <td className="p-3 md:p-4">
                     <div className="flex justify-center gap-2">
                       <button
